@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 """
 -------------------------------------------------
-Project Name: mmdetection2120
-File Name: test.py
+Project Name: mmdetection
+File Name: crop_img_and_anno.py
 Author: ningmq_cv@foxmail.com
 Create Date: 2021/4/13
 -------------------------------------------------
@@ -12,10 +12,11 @@ import os
 from PIL import Image
 import xml.dom.minidom
 import numpy as np
+import xml.etree.ElementTree as ET
 
-ImgPath = 'C:/Users/yaoyao/Desktop/XML_try/img/'
-AnnoPath = 'C:/Users/yaoyao/Desktop/XML_try/xml/'
-ProcessedPath = 'C:/Users/yaoyao/Desktop/pic/'
+ImgPath = 'C:/ning/Github/mmdetection2120/mmdetection/data/kesci2021/acoustics/train/VOC2007/JPEGImages/'
+AnnoPath = 'C:/ning/Github/mmdetection2120/mmdetection/data/kesci2021/acoustics/train/VOC2007/Annotations/'
+ProcessedPath = 'C:/ning/Github/mmdetection2120/mmdetection/data/kesci2021/acoustics/train/VOC2007/JPEGImages_croped/'
 
 prefix_str = '''<annotation>
 	<folder>HollywoodHeads</folder>
@@ -50,8 +51,11 @@ for image in imagelist:
     imgfile = ImgPath + image
     xmlfile = AnnoPath + image_pre + '.xml'
 
-    DomTree = xml.dom.minidom.parse(xmlfile)  # 打开xml文档
-    annotation = DomTree.documentElement  # 得到xml文档对象
+    # DomTree = xml.dom.minidom.parse(xmlfile)  # 打开xml文档
+    # annotation = DomTree.documentElement  # 得到xml文档对象
+
+    tree = ET.parse(xmlfile)
+    root = tree.getroot()
 
     filenamelist = annotation.getElementsByTagName('filename')  # [<DOM Element: filename at 0x381f788>]
     filename = filenamelist[0].childNodes[0].data  # 获取XML节点值
