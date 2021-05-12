@@ -4,58 +4,63 @@
 Project Name: mmdetection
 File Name: crop_img_and_anno.py
 Author: ningmq_cv@foxmail.com
-Create Date: 2021/4/13
+Create Date: 2021/5/12
 -------------------------------------------------
 """
 from __future__ import division
 import os
 from PIL import Image
-import xml.dom.minidom
+import xml.dom.minidom as xmldom
 import numpy as np
 import xml.etree.ElementTree as ET
 
-ImgPath = 'C:/ning/Github/mmdetection2120/mmdetection/data/kesci2021/acoustics/train/VOC2007/JPEGImages/'
-AnnoPath = 'C:/ning/Github/mmdetection2120/mmdetection/data/kesci2021/acoustics/train/VOC2007/Annotations/'
-ProcessedPath = 'C:/ning/Github/mmdetection2120/mmdetection/data/kesci2021/acoustics/train/VOC2007/JPEGImages_croped/'
-
-prefix_str = '''<annotation>
-	<folder>HollywoodHeads</folder>
-	<filename>{}.jpeg</filename>
-	<source>
-		<database>HollywoodHeads 2015 Database</database>
-		<annotation>HollywoodHeads 2015</annotation>
-		<image>WILLOW</image>
-	</source>
-	<size>
-		<width>1171</width>
-		<height>647</height>
-		<depth>3</depth>
-	</size>
-	<segmented>0</segmented>'''
-
+ImgPath = '../../data/SSDD/VOC2007/JPEGImages/'
+AnnoPath = '../../data/SSDD/VOC2007/Annotations/'
+modified_anno_path='../../data/SSDD/VOC2007/Annotations_croped/'
+ProcessedPath = '../../data/SSDD/VOC2007/JPEGImages_croped/'
+prefix_str ='''
+<annotation verified="no">
+    <folder>JPEGImages</folder>
+    <filename>{}</filename>
+    <path>/home/ljw/FRCN_ROOT/data/VOCdevkit2007/VOC2007/JPEGImages/000001.jpg</path>
+    <source>
+        <database>Unknown</database>
+    </source>
+    <size>
+        <width>416</width>
+        <height>323</height>
+        <depth>1</depth>
+    </size>
+    <segmented>0</segmented> 
+    '''
 suffix = '</annotation>'
-
-new_head = '''	<object>
-		<name>head</name>
+new_head = '''	
+    <object>
+        <name>ship</name>
+        <pose>Unspecified</pose>
+        <truncated>0</truncated>
+        <difficult>0</difficult>
 		<bndbox>
 			<xmin>{}</xmin>
 			<ymin>{}</ymin>
 			<xmax>{}</xmax>
 			<ymax>{}</ymax>
 		</bndbox>
-		<difficult>0</difficult>
-	</object>'''
+	</object>
+	'''
+
+
 imagelist = os.listdir(ImgPath)
 for image in imagelist:
     image_pre, ext = os.path.splitext(image)
     imgfile = ImgPath + image
     xmlfile = AnnoPath + image_pre + '.xml'
 
-    # DomTree = xml.dom.minidom.parse(xmlfile)  # 打开xml文档
-    # annotation = DomTree.documentElement  # 得到xml文档对象
+    DomTree = xmldom.parse(xmlfile)  # 打开xml文档
+    annotation = DomTree.documentElement  # 得到xml文档对象
 
-    tree = ET.parse(xmlfile)
-    root = tree.getroot()
+    # tree = ET.parse(xmlfile)
+    # annotation = tree.getroot()
 
     filenamelist = annotation.getElementsByTagName('filename')  # [<DOM Element: filename at 0x381f788>]
     filename = filenamelist[0].childNodes[0].data  # 获取XML节点值
@@ -66,12 +71,12 @@ for image in imagelist:
         os.makedirs(savepath)
 
     bndbox = annotation.getElementsByTagName('bndbox')
-    b = bndbox[1]
+    b = bndbox[0]
     print(b.nodeName)
     i = 1
-    a = [0, 300, 0, 300]
-    b = [0, 0, 300, 300]
-    h = 300
+    a = [0, 200, 0, 200]
+    b = [0, 0, 200, 200]
+    h = 200
     cropboxes = []
 
 
@@ -115,5 +120,5 @@ for image in imagelist:
         cropedimg = img.crop(cropboxes[j])
         xml = prefix_str.format(image) + head_str + suffix
         cropedimg.save(savepath + '/' + image_pre + '_' + str(j) + '.jpg')
-        open(AnnoPath + 'test{}.xml'.format(j), 'w').write(xml)
+        open(modified_anno_path+image_pre+'_'+'{}th_patch.xml'.format(j), 'w').write(xml)
 
