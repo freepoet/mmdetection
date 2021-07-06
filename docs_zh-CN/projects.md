@@ -1,23 +1,21 @@
-# Projects based on MMDetection
+# 基于 MMDetection 的项目
 
-There are many projects built upon MMDetection.
-We list some of them as examples of how to extend MMDetection for your own projects.
-As the page might not be completed, please feel free to create a PR to update this page.
+有许多开源项目都是基于 MMDetection 搭建的，我们在这里列举一部分作为样例，展示如何基于 MMDetection 搭建您自己的项目。
+由于这个页面列举的项目并不完全，我们欢迎社区提交 Pull Request 来更新这个文档。
 
-## Projects as an extension
+## MMDetection 的拓展项目
 
-Some projects extend the boundary of MMDetection for deployment or other research fields.
-They reveal the potential of what MMDetection can do. We list several of them as below.
+一些项目拓展了 MMDetection 的边界，如将 MMDetection 拓展支持 3D 检测或者将 MMDetection 用于部署。
+它们展示了 MMDetection 的许多可能性，所以我们在这里也列举一些。
 
 - [OTEDetection](https://github.com/opencv/mmdetection): OpenVINO training extensions for object detection.
 - [MMDetection3d](https://github.com/open-mmlab/mmdetection3d): OpenMMLab's next-generation platform for general 3D object detection.
 
-## Projects of papers
+## 研究项目
 
-There are also projects released with papers.
-Some of the papers are published in top-tier conferences (CVPR, ICCV, and ECCV), the others are also highly influential.
-To make this list also a reference for the community to develop and compare new object detection algorithms, we list them following the time order of top-tier conferences.
-Methods already supported and maintained by MMDetection are not listed.
+同样有许多研究论文是基于 MMDetection 进行的。许多论文都发表在了顶级的会议或期刊上，或者对社区产生了深远的影响。
+为了向社区提供一个可以参考的论文列表，帮助大家开发或者比较新的前沿算法，我们在这里也遵循会议的时间顺序列举了一些论文。
+MMDetection 中已经支持的算法不在此列。
 
 - Involution: Inverting the Inherence of Convolution for Visual Recognition, CVPR21. [[paper]](https://arxiv.org/abs/2103.06255)[[github]](https://github.com/d-li14/involution)
 - Multiple Instance Active Learning for Object Detection, CVPR 2021. [[paper]](https://openaccess.thecvf.com/content/CVPR2021/papers/Yuan_Multiple_Instance_Active_Learning_for_Object_Detection_CVPR_2021_paper.pdf)[[github]](https://github.com/yuantn/MI-AOD)
